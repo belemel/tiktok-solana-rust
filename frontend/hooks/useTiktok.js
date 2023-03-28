@@ -28,23 +28,50 @@ const useTiktok = (
     const connection = new anchor.web3.Connection(SOLANA_HOST)
     const program = getProgramInstance(connection, wallet)
     const getTiktoks = async () => {
-        console.log('fetching')
 
     const videos = await program.account.videoAccount.all()
-        console.log(videos)
         // save all videos in state fro frontend
         setTikToks(videos)
     }
 
     // function to call likeVideo from smartContract
     const likeVideo = async address => {
-
+       const tx = await program.rpc.likeVideo({
+        accounts: {
+          video: new PublicKey(address),
+          authority: wallet.publicKey,
+          ...defaultAccounts,
+        },
+       })
     }
-
     // function to call createComment from smartContract
     const createComment = async(address, count, comment) => {
+        let [comment_pda] = await anchor.web3.PublicKey.findProgramAddress(
+            [
+                utf8.encode('comment'),
+                new PublicKey(address).toBuffer(),
+                new BN(count).toArrayLike(Buffer, 'be', 8)
+            ],
+            program.programId,
+        )
+        if(userDetail) {
+            const tx = await program.rpc.createComment(
+                comment,
+                userDetail.userName,
+                userDetail.userProfileImageUrl,
+                {
+                    accounts: {
+                        video: new PublicKey(address),
+                        comment: comment_pda,
+                        authority: wallet.publicKey,
+                        ...defaultAccounts
+                    },
+                }
+            )
 
+        }
     }
+
 
     // function to call createVideo from smartContract
     const newVideo = async () => {
@@ -69,13 +96,28 @@ const useTiktok = (
                 }
             }
         )
-        console.log(tx)
         setDescription('')
         setVideoUrl('')
         setNewVideoShow(false)
     }
     const getComments = async (address, count) => {
+        let commentSigners = []
 
+        for(let i=0; i<count; i++){
+            let [commentSigner] = await anchor.web3.PublicKey.findProgramAddress(
+                [
+                    utf8.encode('comment'),
+                    new PublicKey(address).toBuffer(),
+                    new BN(i).toArrayLike(Buffer, 'be', 8)
+                ],
+                program.programId,
+            )
+            commentSigners.push(commentSigner)
+        }
+        const comments = await program.account.commentAccount.fetchMultiple(
+             commentSigners
+        )
+        return comments
     }
     return { getTiktoks, likeVideo, createComment, newVideo, getComments}
 }

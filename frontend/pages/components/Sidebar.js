@@ -19,10 +19,9 @@ const Sidebar = ({
 
     const [liked, setLiked] = useState(false)
     const wallet = useWallet()
-
     useEffect(()=> {
         if(wallet.connected){
-            likesAddress.forEach(address=> {
+            likesAddress?.forEach(address=> {
                 if(wallet.publicKey.toBase58() === address.toBase58()){
                     setLiked(true)
                 }
@@ -35,8 +34,8 @@ const Sidebar = ({
          <div className={styles.sidebarButton}>
            {liked ? (
              <FavoriteIcon 
-               fontSize = 'large'
-               style = {{fill: 'red', stroke: 'red'}}
+               fontSize='large'
+               style={{fill: 'red', stroke: 'red'}}
              />
            ) : (
              <FavoriteIcon

@@ -49,7 +49,6 @@ export default function MainView(){
         setVideoUrl,
         setNewVideoShow
     )
-    console.log(tiktoks, "tiktoks")
 
     useEffect(()=> {
         if(wallet.connected){
@@ -65,13 +64,13 @@ export default function MainView(){
         )
         try {
            const userInfo = await program.account.userAccount.fetch(user_pda)
-           console.log(userInfo)
            setUserDetail(userInfo)
            setAccount(true)
         } catch(e) {
             setAccount(false)
         }
     }
+
     return (
             <>
             {isAccount ? (
@@ -91,6 +90,7 @@ export default function MainView(){
                             <h1>No Videos</h1>
                         ) : (
                             tiktoks?.map((tiktok,id)=> (
+                                
                                 <Video 
                                 key = {id}
                                 address = {tiktok.publicKey.toBase58()}
@@ -103,10 +103,11 @@ export default function MainView(){
                                 likesAddress = {tiktok.account.peopleWhoLiked}
                                 createComment = {createComment}
                                 getComments = {getComments}
-                                commentCount = {tiktok.account.commentCount.toNumber}
+                                commentCount = {tiktok.account.commentCount.toNumber()}
  
                                 />
-                            ))
+                            )
+                            )
                         )}
                     </div>
                     <BottomBar

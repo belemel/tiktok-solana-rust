@@ -7,12 +7,11 @@ import { AiFillHome, AiOutlineCompass } from "react-icons/ai"
 
 
 const BottomBar = ({ setNewVideoShow, getTiktoks}) => {
-    console.log(setNewVideoShow, "set new video--")
     
     return (
         <div className={styles.wrapper}>
            <AiFillHome className={styles.bottomIcon} />
-           <AiOutlineCompass className={styles.bottomIcon} onClick={() => {}} />
+           <AiOutlineCompass className={styles.bottomIcon} onClick={getTiktoks} />
            <div className={styles.addVideoButton}>
               <IoIosAdd
                 className={styles.bottomIcon}

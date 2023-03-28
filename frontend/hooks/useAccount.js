@@ -32,7 +32,6 @@ const useAccount = () => {
              ...defaultAccounts,
         }
     })
-    console.log("User is signed ups")
   }
   return { signup }
 }

@@ -6,24 +6,22 @@ import Sidebar from "./Sidebar"
 import Footer from "./Footer"
 
 const Video = ({
-    address,
-    url,
-    channel,
-    description,
-    index,
-    likes,
-    shares,
-    likeVideo,
-    likesAddress,
-    createComment,
-    getComments,
-    commentCount,
+  address,
+  url,
+  channel,
+  description,
+  index,
+  likes,
+  shares,
+  likeVideo,
+  likesAddress,
+  createComment,
+  getComments,
+  commentCount,
 }) => {
-
     const [playing, setPlaying ] = useState(false)
     const [showCommentsModal, setShowCommentsModal] = useState(false)
     const videoRef = useRef(null)
-    
     const onVideoPress = () => {
         if(playing) {
             videoRef.current.pause()
@@ -59,25 +57,25 @@ const Video = ({
             song = {index}
             />
 
-            <Sidebar 
-              address = {address}
-              likes = {likes}
-              shares = {shares}
-              onShowComments = {showComments}
-              likeVideo = {likeVideo}
-              index = {index}
-              likesAddress = {likesAddress}
-              messages = {commentCount}
+            <Sidebar
+                  address={address} 
+                  likes={likes}
+                  shares={shares}
+                  onShowComments={showComments}
+                  likeVideo={likeVideo}
+                  index={index}
+                  likesAddress={likesAddress}
+                  messages={commentCount}
             />
             
             {showCommentsModal &&(
                 <Comments 
-                onHide = {hideComments}
-                index = {index}
-                address = {address}
-                createComment = {createComment}
-                getComments = {getComments}
-                commentCount = {commentCount}
+                onHide={hideComments}
+                index={index}
+                address={address}
+                createComment={createComment}
+                getComments={getComments}
+                commentCount={commentCount}
                 />
             )}
         </div>
