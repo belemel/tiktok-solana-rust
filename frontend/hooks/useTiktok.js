@@ -66,10 +66,13 @@ const useTiktok = (
                         authority: wallet.publicKey,
                         ...defaultAccounts
                     },
+                    
                 }
+                
             )
-
+          
         }
+      
     }
 
 

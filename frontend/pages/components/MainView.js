@@ -57,6 +57,15 @@ export default function MainView(){
         }
     }, [wallet.connected])
 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          getTiktoks();
+        },1000)
+    
+        // clear interval on re-render to avoid memory leaks
+        return () => clearInterval(intervalId)
+      })
+
     const checkAccount = async () => {
         let [user_pda] = await anchor.web3.PublicKey.findProgramAddress(
             [utf8.encode('user'), wallet.publicKey.toBuffer()],

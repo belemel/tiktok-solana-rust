@@ -10,7 +10,6 @@ TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
 
 const CommentCard = ({username, timestamp, avatar, comment}) => {
-    console.log(username, avatar, timestamp, comment)
     return (
         <div className={styles.wrapper}>
           <div>

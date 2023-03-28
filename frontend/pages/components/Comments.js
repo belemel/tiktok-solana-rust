@@ -20,18 +20,29 @@ const Comments = (
 
     }, [index])
 
-
+   
 
     const gettingComments = async () => {
         let comments = await getComments(address, commentCount)
         comments.sort((a,b) => b.videoTime?.toNumber() - a.videoTime?.toNumber())
         setComments(comments)
     }
+
     const replyClicked = async () => {
         await createComment(address, commentCount, newComment)
         setNewComment('')
-       
     }
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            gettingComments();
+        },1000)
+    
+        // clear interval on re-render to avoid memory leaks
+        return () => clearInterval(intervalId)
+      })
+
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.commentsHeader}>
