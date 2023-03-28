@@ -60,6 +60,7 @@ export default function MainView(){
     useEffect(() => {
         const intervalId = setInterval(() => {
           getTiktoks();
+          checkAccount()
         },1000)
     
         // clear interval on re-render to avoid memory leaks
